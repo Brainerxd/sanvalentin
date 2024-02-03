@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle Especial</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #add8e6; /* Color de fondo azul pastel */
+      position: relative;
+      overflow: hidden;
+    }
+    body::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #FFC0CB, #87CEFA); /* Degradado de colores */
+      z-index: -1;
+    }
+    #animation-container {
+      position: relative;
+      width: 80vw;
+      max-width: 300px;
+      height: 80vw;
+      max-height: 300px;
+    }
+    #heart {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: growAndLift 3s ease-in-out forwards;
+    }
+    @keyframes growAndLift {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(10);
+      }
+      100% {
+        transform: translate(-50%, -50%) translateY(-30%) scale(10);
+      }
+    }
+    #message-container {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      text-align: center;
+      font-family: 'Cursive', sans-serif; /* Cambiada a una fuente cursiva */
+      display: none;
+      color: #000; /* Color del texto */
+    }
+    .message-line {
+      margin: 30px 0; /* Ajusta el margen superior e inferior */
+      font-size: 1.5em;
+      opacity: 0;
+      transition: opacity 1s ease-in-out; /* Efecto de desvanecimiento */
+    }
+  </style>
+</head>
+<body>
+  <div id="animation-container">
+    <div id="heart">❤️</div>
+    <div id="message-container">
+      <div class="message-line">Gissell</div>
+      <div class="message-line">¿Quieres ser mi San Valentín?</div>
+    </div>
+  </div>
+
+  <script>
+    const heart = document.getElementById('heart');
+    const messageContainer = document.getElementById('message-container');
+
+    heart.addEventListener('animationend', () => {
+      // Cuando la animación del corazón termina, muestra el mensaje en secuencia
+      messageContainer.style.display = 'block';
+      showTextWithFadeIn();
+    });
+
+    function showTextWithFadeIn() {
+      const lines = document.querySelectorAll('.message-line');
+      let index = 0;
+
+      function showNextLine() {
+        if (index < lines.length) {
+          lines[index].style.opacity = 1;
+          index++;
+          setTimeout(showNextLine, 1000); // Ajusta el tiempo entre líneas (en milisegundos)
+        }
+      }
+
+      showNextLine();
+    }
+  </script>
+</body>
+</html>
